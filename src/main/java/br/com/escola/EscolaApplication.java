@@ -1,13 +1,13 @@
-package br.com.escolaeldorado;
+package br.com.escola;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class EscolaeldoradoApplication {
+public class EscolaApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(EscolaeldoradoApplication.class, args);
+		SpringApplication.run(EscolaApplication.class, args);
 	}
 
 }

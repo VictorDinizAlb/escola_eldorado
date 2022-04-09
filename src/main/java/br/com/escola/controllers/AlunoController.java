@@ -1,4 +1,4 @@
-package br.com.escolaeldorado.controllers;
+package br.com.escola.controllers;
 
 import java.util.List;
 
@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import br.com.escolaeldorado.model.Aluno;
-import br.com.escolaeldorado.repository.AlunoRepository;
+import br.com.escola.models.Aluno;
+import br.com.escola.repositories.AlunoRepository;
 
 @RestController
 @RequestMapping("/aluno")
@@ -23,16 +23,14 @@ public class AlunoController {
     private AlunoRepository alunoRepo;
 
     @GetMapping()
-    public ResponseEntity<List<Aluno>> listar() {
-        return new ResponseEntity<>(alunoRepo.findAll(), HttpStatus.OK);
+    public List<Aluno> listar() {
+        return this.alunoRepo.findAll();
     }
 
-    @PostMapping("/")
-    // @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping()
+    @ResponseStatus(HttpStatus.CREATED)
     public Aluno cadastrarAluno(@RequestBody Aluno alunoNovo) {
-        return alunoNovo;
-        // Aluno aluno = alunoRepo.save(alunoNovo);
-        // return new ResponseEntity<>(aluno, HttpStatus.CREATED);
+        return this.alunoRepo.save(alunoNovo);
     }
 
 }

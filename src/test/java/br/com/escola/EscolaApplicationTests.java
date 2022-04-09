@@ -1,10 +1,10 @@
-package br.com.escolaeldorado;
+package br.com.escola;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class EscolaeldoradoApplicationTests {
+class EscolaApplicationTests {
 
 	@Test
 	void contextLoads() {
