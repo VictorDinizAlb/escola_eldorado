@@ -8,5 +8,5 @@ import br.com.escola.model.Aula;
 
 public interface AulaRepository extends JpaRepository<Aula, Long> {
 
-    public List<Aula> findByUsuarioId(Long id);
+    public List<Aula> findByAlunoId(Long id);
 }

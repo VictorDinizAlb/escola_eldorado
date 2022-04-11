@@ -1,21 +1,17 @@
 package br.com.escola.model;
 
-import java.util.Collection;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
+import br.com.escola.model.enums.EnumCategorias;
 import lombok.Data;
 
 @Data
 @Entity
-public class Usuario implements UserDetails {
+public class Usuario {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -30,53 +26,53 @@ public class Usuario implements UserDetails {
     @Column(nullable = false)
     private String senha;
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        // TODO Auto-generated method stub
-        return null;
+    @Column(nullable = false)
+    private EnumCategorias categoria;
+
+    public Usuario() {
+    }
+
+    public Usuario(String nome, String email, String senha, String categoria) {
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.categoria = EnumCategorias.valueOf(categoria.toUpperCase());
     }
 
     public Long getId() {
         return this.id;
     }
 
-    @Override
-    public String getPassword() {
-        // TODO Auto-generated method stub
-        return this.senha;
+    public String getNome() {
+        return this.nome;
     }
 
-    public void setPassword(String novaSenha) {
-        this.senha = novaSenha;
+    public void setNome(String novaNome) {
+        this.nome = novaNome;
     }
 
-    @Override
-    public String getUsername() {
-        // TODO Auto-generated method stub
+    public String getEmail() {
         return this.email;
     }
 
-    @Override
-    public boolean isAccountNonExpired() {
-        // TODO Auto-generated method stub
-        return true;
+    public void setEmail(String novaEmail) {
+        this.email = novaEmail;
     }
 
-    @Override
-    public boolean isAccountNonLocked() {
-        // TODO Auto-generated method stub
-        return true;
+    public String getSenha() {
+        return this.senha;
     }
 
-    @Override
-    public boolean isCredentialsNonExpired() {
-        // TODO Auto-generated method stub
-        return true;
+    public void setSenha(String novaSenha) {
+        this.senha = novaSenha;
     }
 
-    @Override
-    public boolean isEnabled() {
-        // TODO Auto-generated method stub
-        return true;
+    public EnumCategorias getCategoria() {
+        return this.categoria;
     }
+
+    public void setCategoria(String novaCategoria) {
+        this.categoria = EnumCategorias.valueOf(novaCategoria.toUpperCase());
+    }
+
 }

@@ -22,7 +22,6 @@ import org.springframework.web.util.UriComponentsBuilder;
 import br.com.escola.controllers.form.AulaForm;
 import br.com.escola.model.Aula;
 import br.com.escola.repository.AulaRepository;
-import br.com.escola.repository.ProfessorRepository;
 import br.com.escola.repository.UsuarioRepository;
 
 @RestController
@@ -35,18 +34,15 @@ public class AulaController {
     @Autowired
     private UsuarioRepository usuarioRepo;
 
-    @Autowired
-    private ProfessorRepository professorRepo;
-
     @GetMapping("/{id}")
-    public List<Aula> listarAulasPorAluno(@PathVariable("id") Long id) {
-        return this.aulaRepo.findByUsuarioId(id);
+    public List<Aula> listarAulasPorUsuario(@PathVariable("id") Long id) {
+        return this.aulaRepo.findByAlunoId(id);
     }
 
     @PostMapping()
-    public ResponseEntity<Aula> criarAula(@RequestBody @Valid AulaForm aulaForm, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<Aula> criarAula(@RequestBody AulaForm aulaForm, UriComponentsBuilder uriBuilder) {
 
-        Aula novaAula = aulaForm.converter(this.usuarioRepo, this.professorRepo);
+        Aula novaAula = aulaForm.converter(this.usuarioRepo);
 
         this.aulaRepo.save(novaAula);
 
@@ -60,11 +56,11 @@ public class AulaController {
         Optional<Aula> aula = this.aulaRepo.findById(id);
 
         if (aula.isPresent()) {
-            Long usuarioId = aula.get().getAulaUsuarioId();
+            Long usuarioId = aula.get().getAulaAlunoId();
 
             aula.get().setStatus("Cancelada");
 
-            List<Aula> aulasRestantes = this.aulaRepo.findByUsuarioId(usuarioId);
+            List<Aula> aulasRestantes = this.aulaRepo.findByAlunoId(usuarioId);
 
             return aulasRestantes;
 

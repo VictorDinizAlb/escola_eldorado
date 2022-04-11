@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import br.com.escola.model.enums.EnumStatusAula;
 import lombok.Data;
 
 @Data
@@ -21,54 +22,62 @@ public class Aula {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "usuario", nullable = false)
-    private Usuario usuario;
+    @JoinColumn(name = "aluno", nullable = false)
+    private Usuario aluno;
 
     @ManyToOne
     @JoinColumn(name = "professor", nullable = false)
-    private Professor professor;
+    private Usuario professor;
 
     @Column(nullable = false)
     private Date hora;
 
     @Column(nullable = false)
-    private String status;
+    private EnumStatusAula status;
 
     public Aula() {
     }
 
-    public Aula(Usuario usuario, Professor professor, Date hora, String status) {
-        this.usuario = usuario;
+    public Aula(Usuario aluno, Usuario professor, Date hora, String status) {
+        this.aluno = aluno;
         this.professor = professor;
         this.hora = hora;
-        this.status = status;
+        this.status = EnumStatusAula.valueOf(status.toUpperCase());
     }
 
     public Long getId() {
         return this.id;
     }
 
-    public Long getAulaUsuarioId() {
-        return this.usuario.getId();
+    public Long getAulaAlunoId() {
+        return this.aluno.getId();
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
+    public void setAluno(Usuario aluno) {
+        this.aluno = aluno;
     }
 
     public Long getAulaProfessorId() {
         return this.professor.getId();
     }
 
-    public void setProfessor(Professor professor) {
+    public void setProfessor(Usuario professor) {
         this.professor = professor;
     }
 
-    public String getStatus() {
+    public Date getHora() {
+        return this.hora;
+    }
+
+    public void setHora(Date hora) {
+        this.hora = hora;
+    }
+
+    public EnumStatusAula getStatus() {
         return this.status;
     }
 
     public void setStatus(String status) {
-        this.status = status;
+        this.status = EnumStatusAula.valueOf(status.toUpperCase());
     }
 }

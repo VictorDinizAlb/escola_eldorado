@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.escola.model.Usuario;
+import br.com.escola.model.enums.EnumCategorias;
 import br.com.escola.repository.UsuarioRepository;
 
 @RestController
@@ -27,19 +28,32 @@ public class UsuarioController {
 
     // private PasswordEncoder encoder;
 
-    @GetMapping()
-    public List<Usuario> listar() {
-        return this.usuarioRepo.findAll();
+    @GetMapping("/alunos")
+    public List<Usuario> listarAlunos() {
+        String categoria = "ALUNO";
+        return this.usuarioRepo.findByCategoria(EnumCategorias.valueOf(categoria.toUpperCase()));
+    }
+
+    @GetMapping("/professores")
+    public List<Usuario> listarProfessores() {
+        String categoria = "PROFESSOR";
+        return this.usuarioRepo.findByCategoria(EnumCategorias.valueOf(categoria.toUpperCase()));
     }
 
     @PostMapping()
     public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody @Valid Usuario novoUsuario,
             UriComponentsBuilder uriBuilder) {
 
-        this.usuarioRepo.save(novoUsuario);
+        Usuario usuario = new Usuario(
+                novoUsuario.getNome(),
+                novoUsuario.getEmail(),
+                novoUsuario.getSenha(),
+                novoUsuario.getCategoria().toString());
 
-        URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(novoUsuario.getId()).toUri();
-        return ResponseEntity.created(uri).body(novoUsuario);
+        this.usuarioRepo.save(usuario);
+
+        URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+        return ResponseEntity.created(uri).body(usuario);
     }
 
 }

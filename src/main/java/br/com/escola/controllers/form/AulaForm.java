@@ -6,16 +6,14 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import br.com.escola.model.Aula;
-import br.com.escola.model.Professor;
 import br.com.escola.model.Usuario;
-import br.com.escola.repository.ProfessorRepository;
 import br.com.escola.repository.UsuarioRepository;
 
 public class AulaForm {
 
     @NotNull
     @NotEmpty
-    private Long usuarioId;
+    private Long alunoId;
 
     @NotNull
     @NotEmpty
@@ -25,12 +23,12 @@ public class AulaForm {
     @NotEmpty
     private Date hora;
 
-    public Long getUsuario() {
-        return this.usuarioId;
+    public Long getAluno() {
+        return this.alunoId;
     }
 
-    public void setUsuario(Long usuario) {
-        this.usuarioId = usuario;
+    public void setAluno(Long aluno) {
+        this.alunoId = aluno;
     }
 
     public Long getProfessor() {
@@ -49,11 +47,11 @@ public class AulaForm {
         this.hora = hora;
     }
 
-    public Aula converter(UsuarioRepository usuarioRepo, ProfessorRepository professorRepo) {
-        Usuario usuario = usuarioRepo.findById(usuarioId).get();
-        Professor professor = professorRepo.findById(professorId).get();
+    public Aula converter(UsuarioRepository usuarioRepo) {
+        Usuario aluno = usuarioRepo.findById(alunoId).get();
+        Usuario professor = usuarioRepo.findById(professorId).get();
         String status = "Agendada";
-        return new Aula(usuario, professor, hora, status);
+        return new Aula(aluno, professor, hora, status);
     }
 
 }
