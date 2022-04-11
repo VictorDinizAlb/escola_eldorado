@@ -2,6 +2,9 @@ package br.com.escola.controllers.form;
 
 import java.util.Date;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 import br.com.escola.model.Aula;
 import br.com.escola.model.Professor;
 import br.com.escola.model.Usuario;
@@ -10,8 +13,16 @@ import br.com.escola.repository.UsuarioRepository;
 
 public class AulaForm {
 
+    @NotNull
+    @NotEmpty
     private Long usuarioId;
+
+    @NotNull
+    @NotEmpty
     private Long professorId;
+
+    @NotNull
+    @NotEmpty
     private Date hora;
 
     public Long getUsuario() {

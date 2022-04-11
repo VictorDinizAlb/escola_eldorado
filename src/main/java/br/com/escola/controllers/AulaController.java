@@ -1,10 +1,14 @@
 package br.com.escola.controllers;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.escola.controllers.form.AulaForm;
 import br.com.escola.model.Aula;
@@ -39,12 +44,14 @@ public class AulaController {
     }
 
     @PostMapping()
-    @ResponseStatus(HttpStatus.CREATED)
-    public Aula criarAula(@RequestBody AulaForm aulaForm) {
+    public ResponseEntity<Aula> criarAula(@RequestBody @Valid AulaForm aulaForm, UriComponentsBuilder uriBuilder) {
 
         Aula novaAula = aulaForm.converter(this.usuarioRepo, this.professorRepo);
 
-        return this.aulaRepo.save(novaAula);
+        this.aulaRepo.save(novaAula);
+
+        URI uri = uriBuilder.path("/aula/{id}").buildAndExpand(novaAula.getId()).toUri();
+        return ResponseEntity.created(uri).body(novaAula);
     }
 
     @DeleteMapping("/{id}")

@@ -44,6 +44,10 @@ public class Aula {
         this.status = status;
     }
 
+    public Long getId() {
+        return this.id;
+    }
+
     public Long getAulaUsuarioId() {
         return this.usuario.getId();
     }
