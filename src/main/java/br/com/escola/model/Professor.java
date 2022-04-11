@@ -1,18 +1,16 @@
-package br.com.escola.models;
+package br.com.escola.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
 
 import lombok.Data;
 
-@Data // Essa notation substitui o uso dos getters e setters (vem do lombok)
+@Data
 @Entity
-@Table
-public class Aluno {
+public class Professor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -21,10 +19,14 @@ public class Aluno {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     @Column(nullable = false)
     private String senha;
+
+    public Long getId() {
+        return this.id;
+    }
 
 }
