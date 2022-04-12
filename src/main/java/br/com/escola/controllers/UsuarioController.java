@@ -8,7 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -27,10 +27,22 @@ public class UsuarioController {
     @Autowired // notation para instanciar o repositório com seus métodos padrões
     private UsuarioRepository usuarioRepo;
 
-    // @Autowired
-    private PasswordEncoder encoder;
+    @PostMapping()
+    public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody @Valid Usuario novoUsuario,
+            UriComponentsBuilder uriBuilder) {
 
-    // private PasswordEncoder encoder;
+        Usuario usuario = new Usuario(
+                novoUsuario.getNome(),
+                novoUsuario.getEmail(),
+                new BCryptPasswordEncoder().encode(
+                        novoUsuario.getSenha()), // Criptografando a senha
+                novoUsuario.getCategoria().toString());
+
+        this.usuarioRepo.save(usuario);
+
+        URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
+        return ResponseEntity.created(uri).body(usuario);
+    }
 
     @GetMapping("/alunos")
     public List<Usuario> listarAlunos() {
@@ -41,26 +53,14 @@ public class UsuarioController {
     @GetMapping("/professores")
     public List<Usuario> listarProfessores() {
         String categoria = "PROFESSOR";
-        Usuario usuario = this.usuarioRepo.findByEmail("victor@email.com").get();
+        Optional<Usuario> usuario = this.usuarioRepo.findByEmail("victor@email.com");
 
-        System.out.println(usuario);
-        return this.usuarioRepo.findByCategoria(EnumCategorias.valueOf(categoria.toUpperCase()));
-    }
+        if (usuario.isPresent()) {
+            return this.usuarioRepo.findByCategoria(EnumCategorias.valueOf(categoria.toUpperCase()));
+        } else {
+            return null;
+        }
 
-    @PostMapping()
-    public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody @Valid Usuario novoUsuario,
-            UriComponentsBuilder uriBuilder) {
-
-        Usuario usuario = new Usuario(
-                novoUsuario.getNome(),
-                novoUsuario.getEmail(),
-                encoder.encode(novoUsuario.getSenha()), // Criptografando a senha
-                novoUsuario.getCategoria().toString());
-
-        this.usuarioRepo.save(usuario);
-
-        URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
-        return ResponseEntity.created(uri).body(usuario);
     }
 
 }
