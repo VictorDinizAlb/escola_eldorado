@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.escola.repository.MateriaRepository;
-import br.com.escola.repository.UsuarioRepository;
-import br.com.escola.controllers.form.MateriaForm;
 import br.com.escola.model.Materia;
 
 @RestController
@@ -25,22 +23,18 @@ public class MateriaController {
     @Autowired
     private MateriaRepository materiaRepo;
 
-    @Autowired
-    private UsuarioRepository usuarioRepo;
-
     @GetMapping()
     public List<Materia> listarMaterias() {
         return this.materiaRepo.findAll();
     }
 
     @PostMapping()
-    public ResponseEntity<Materia> criarMateria(@RequestBody MateriaForm novaMateria, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<Materia> criarMateria(@RequestBody Materia novaMateria, UriComponentsBuilder uriBuilder) {
 
-        Materia materia = novaMateria.converter(usuarioRepo);
-        this.materiaRepo.save(materia);
+        this.materiaRepo.save(novaMateria);
 
-        URI uri = uriBuilder.path("/materia/{id}").buildAndExpand(materia.getId()).toUri();
-        return ResponseEntity.created(uri).body(materia);
+        URI uri = uriBuilder.path("/materia/{id}").buildAndExpand(novaMateria.getId()).toUri();
+        return ResponseEntity.created(uri).body(novaMateria);
     }
 
     @GetMapping("/{id}")

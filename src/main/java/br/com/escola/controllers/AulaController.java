@@ -2,7 +2,6 @@ package br.com.escola.controllers;
 
 import java.net.URI;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
