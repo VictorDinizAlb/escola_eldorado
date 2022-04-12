@@ -1,6 +1,6 @@
 package br.com.escola.controllers.form;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -13,45 +13,45 @@ public class AulaForm {
 
     @NotNull
     @NotEmpty
-    private Long alunoId;
+    private Long aluno;
 
     @NotNull
     @NotEmpty
-    private Long professorId;
+    private Long professor;
 
     @NotNull
     @NotEmpty
-    private Date hora;
+    private LocalDateTime hora;
 
     public Long getAluno() {
-        return this.alunoId;
+        return this.aluno;
     }
 
     public void setAluno(Long aluno) {
-        this.alunoId = aluno;
+        this.aluno = aluno;
     }
 
     public Long getProfessor() {
-        return this.professorId;
+        return this.professor;
     }
 
     public void setProfessor(Long professor) {
-        this.professorId = professor;
+        this.professor = professor;
     }
 
-    public Date getHora() {
+    public LocalDateTime getHora() {
         return this.hora;
     }
 
-    public void setHora(Date hora) {
+    public void setHora(LocalDateTime hora) {
         this.hora = hora;
     }
 
     public Aula converter(UsuarioRepository usuarioRepo) {
-        Usuario aluno = usuarioRepo.findById(alunoId).get();
-        Usuario professor = usuarioRepo.findById(professorId).get();
+        Usuario usuarioAluno = usuarioRepo.findById(aluno).get();
+        Usuario usuarioProfessor = usuarioRepo.findById(professor).get();
         String status = "Agendada";
-        return new Aula(aluno, professor, hora, status);
+        return new Aula(usuarioAluno, usuarioProfessor, hora, status);
     }
 
 }

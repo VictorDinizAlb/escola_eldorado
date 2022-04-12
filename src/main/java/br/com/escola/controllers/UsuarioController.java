@@ -2,7 +2,6 @@ package br.com.escola.controllers;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -16,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import br.com.escola.controllers.dto.UsuarioDto;
 import br.com.escola.model.Usuario;
 import br.com.escola.model.enums.EnumCategorias;
 import br.com.escola.repository.UsuarioRepository;
@@ -28,7 +28,7 @@ public class UsuarioController {
     private UsuarioRepository usuarioRepo;
 
     @PostMapping()
-    public ResponseEntity<Usuario> cadastrarUsuario(@RequestBody @Valid Usuario novoUsuario,
+    public ResponseEntity<UsuarioDto> cadastrarUsuario(@RequestBody @Valid Usuario novoUsuario,
             UriComponentsBuilder uriBuilder) {
 
         Usuario usuario = new Usuario(
@@ -40,8 +40,10 @@ public class UsuarioController {
 
         this.usuarioRepo.save(usuario);
 
-        URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuario.getId()).toUri();
-        return ResponseEntity.created(uri).body(usuario);
+        UsuarioDto usuarioDto = new UsuarioDto(usuario);
+
+        URI uri = uriBuilder.path("/usuario/{id}").buildAndExpand(usuarioDto.getId()).toUri();
+        return ResponseEntity.created(uri).body(usuarioDto);
     }
 
     @GetMapping("/alunos")
@@ -53,13 +55,7 @@ public class UsuarioController {
     @GetMapping("/professores")
     public List<Usuario> listarProfessores() {
         String categoria = "PROFESSOR";
-        Optional<Usuario> usuario = this.usuarioRepo.findByEmail("victor@email.com");
-
-        if (usuario.isPresent()) {
-            return this.usuarioRepo.findByCategoria(EnumCategorias.valueOf(categoria.toUpperCase()));
-        } else {
-            return null;
-        }
+        return this.usuarioRepo.findByCategoria(EnumCategorias.valueOf(categoria.toUpperCase()));
 
     }
 

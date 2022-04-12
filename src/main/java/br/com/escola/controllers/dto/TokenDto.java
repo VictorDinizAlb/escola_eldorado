@@ -1,4 +1,4 @@
-package br.com.escola.controllers.form;
+package br.com.escola.controllers.dto;
 
 public class TokenDto {
 

@@ -33,8 +33,6 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
 
         boolean valido = tokenService.isTokenValido(token);
 
-        System.out.println(token);
-
         if (valido) {
             autenticarUsuario(token);
         }
@@ -45,8 +43,6 @@ public class AutenticacaoViaTokenFilter extends OncePerRequestFilter {
     private void autenticarUsuario(String token) {
 
         Long usuarioId = tokenService.getUsuarioId(token);
-
-        System.out.println(usuarioId);
 
         Usuario usuario = usuarioRepo.findById(usuarioId).get();
 

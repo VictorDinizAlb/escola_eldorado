@@ -1,10 +1,10 @@
 package br.com.escola.controllers;
 
 import java.net.URI;
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-
-import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -32,20 +32,34 @@ public class AulaController {
     @Autowired
     private UsuarioRepository usuarioRepo;
 
-    @GetMapping("/{id}")
-    public List<Aula> listarAulasPorUsuario(@PathVariable("id") Long id) {
+    @GetMapping("/aluno/{id}")
+    public List<Aula> listarAulasPorAluno(@PathVariable("id") Long id) {
         return this.aulaRepo.findByAlunoId(id);
     }
 
+    @GetMapping("/professor/{id}")
+    public List<Aula> listarAulasPorProfessor(@PathVariable("id") Long id) {
+        return this.aulaRepo.findByProfessorId(id);
+    }
+
     @PostMapping()
-    public ResponseEntity<Aula> criarAula(@RequestBody @Valid AulaForm aulaForm, UriComponentsBuilder uriBuilder) {
+    public ResponseEntity<Aula> criarAula(@RequestBody AulaForm aulaForm, UriComponentsBuilder uriBuilder) {
 
-        Aula novaAula = aulaForm.converter(this.usuarioRepo);
+        LocalDateTime dataHojeLDT = LocalDateTime.now();
 
-        this.aulaRepo.save(novaAula);
+        Integer jaPassou = aulaForm.getHora().compareTo(dataHojeLDT);
 
-        URI uri = uriBuilder.path("/aula/{id}").buildAndExpand(novaAula.getId()).toUri();
-        return ResponseEntity.created(uri).body(novaAula);
+        if (jaPassou > 0) {
+            Aula novaAula = aulaForm.converter(this.usuarioRepo);
+
+            this.aulaRepo.save(novaAula);
+
+            URI uri = uriBuilder.path("/aula/{id}").buildAndExpand(novaAula.getId()).toUri();
+            return ResponseEntity.created(uri).body(novaAula);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @DeleteMapping("/{id}")

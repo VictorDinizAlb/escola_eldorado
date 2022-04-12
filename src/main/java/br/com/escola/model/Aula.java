@@ -1,5 +1,6 @@
 package br.com.escola.model;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -30,7 +31,7 @@ public class Aula {
     private Usuario professor;
 
     @Column(nullable = false)
-    private Date hora;
+    private LocalDateTime hora;
 
     @Column(nullable = false)
     private EnumStatusAula status;
@@ -38,7 +39,7 @@ public class Aula {
     public Aula() {
     }
 
-    public Aula(Usuario aluno, Usuario professor, Date hora, String status) {
+    public Aula(Usuario aluno, Usuario professor, LocalDateTime hora, String status) {
         this.aluno = aluno;
         this.professor = professor;
         this.hora = hora;
@@ -65,11 +66,11 @@ public class Aula {
         this.professor = professor;
     }
 
-    public Date getHora() {
+    public LocalDateTime getHora() {
         return this.hora;
     }
 
-    public void setHora(Date hora) {
+    public void setHora(LocalDateTime hora) {
         this.hora = hora;
     }
 
