@@ -29,6 +29,10 @@ public class Aula {
     @JoinColumn(name = "professor", nullable = false)
     private Usuario professor;
 
+    @ManyToOne
+    @JoinColumn(name = "materia", nullable = false)
+    private Materia materia;
+
     @Column(nullable = false)
     private LocalDateTime hora;
 
@@ -38,9 +42,10 @@ public class Aula {
     public Aula() {
     }
 
-    public Aula(Usuario aluno, Usuario professor, LocalDateTime hora, String status) {
+    public Aula(Usuario aluno, Usuario professor, Materia materia, LocalDateTime hora, String status) {
         this.aluno = aluno;
         this.professor = professor;
+        this.materia = materia;
         this.hora = hora;
         this.status = EnumStatusAula.valueOf(status.toUpperCase());
     }

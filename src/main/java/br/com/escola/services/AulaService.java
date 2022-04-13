@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import br.com.escola.controllers.form.AulaForm;
 import br.com.escola.models.Aula;
+import br.com.escola.models.enums.EnumCategorias;
 import br.com.escola.models.enums.EnumStatusAula;
 import br.com.escola.repositories.AulaRepository;
+import br.com.escola.repositories.MateriaRepository;
 import br.com.escola.repositories.UsuarioRepository;
 
 @Service
@@ -24,12 +26,15 @@ public class AulaService {
     @Autowired
     UsuarioRepository usuarioRepo;
 
+    @Autowired
+    MateriaRepository materiaRepo;
+
     public Aula criarAula(AulaForm aulaForm) {
 
         Integer jaPassou = aulaForm.getHora().compareTo(this.dataHojeLDT);
 
         if (jaPassou > 0) {
-            Aula novaAula = aulaForm.converter(this.usuarioRepo);
+            Aula novaAula = aulaForm.converter(this.usuarioRepo, this.materiaRepo);
 
             return this.aulaRepo.save(novaAula);
 
@@ -38,16 +43,16 @@ public class AulaService {
         }
     }
 
-    public List<Aula> listarAulas(Long id, String categoria) {
+    public List<Aula> listarAulas(Long id, EnumCategorias categoria) {
 
         List<Aula> aulas;
 
         switch (categoria) {
-            case "Aluno":
+            case ALUNO:
                 aulas = this.aulaRepo.findByAlunoId(id);
                 break;
 
-            case "Professor":
+            case PROFESSOR:
                 aulas = this.aulaRepo.findByProfessorId(id);
                 break;
 
@@ -60,7 +65,7 @@ public class AulaService {
     public List<Aula> atualizarStatusAulas(List<Aula> aulas) {
 
         for (Aula aula : aulas) {
-            if (aula.getHora().compareTo(dataHojeLDT) < 0) {
+            if (aula.getHora().compareTo(dataHojeLDT) < 0 && aula.getStatus() != EnumStatusAula.CANCELADA) {
                 aula.setStatus(EnumStatusAula.REALIZADA);
                 this.aulaRepo.save(aula);
             }

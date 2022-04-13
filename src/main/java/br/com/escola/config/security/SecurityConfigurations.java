@@ -48,7 +48,6 @@ public class SecurityConfigurations extends WebSecurityConfigurerAdapter {
                 .antMatchers(HttpMethod.POST, "/auth").permitAll()
                 .antMatchers(HttpMethod.POST, "/usuario").permitAll()
                 .anyRequest().authenticated()
-                // .antMatchers(HttpMethod.POST, "/materia").hasRole("PROFESSOR")
                 .and().csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().addFilterBefore(new AutenticacaoViaTokenFilter(

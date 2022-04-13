@@ -6,37 +6,51 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import br.com.escola.models.Aula;
+import br.com.escola.models.Materia;
 import br.com.escola.models.Usuario;
+import br.com.escola.repositories.MateriaRepository;
 import br.com.escola.repositories.UsuarioRepository;
 
 public class AulaForm {
 
     @NotNull
     @NotEmpty
-    private Long aluno;
+    private Long alunoId;
 
     @NotNull
     @NotEmpty
-    private Long professor;
+    private Long professorId;
+
+    @NotNull
+    @NotEmpty
+    private Long materiaId;
 
     @NotNull
     @NotEmpty
     private LocalDateTime hora;
 
-    public Long getAluno() {
-        return this.aluno;
+    public Long getAlunoId() {
+        return this.alunoId;
     }
 
-    public void setAluno(Long aluno) {
-        this.aluno = aluno;
+    public void setAlunoId(Long alunoId) {
+        this.alunoId = alunoId;
     }
 
-    public Long getProfessor() {
-        return this.professor;
+    public Long getProfessorId() {
+        return this.professorId;
     }
 
-    public void setProfessor(Long professor) {
-        this.professor = professor;
+    public void setProfessorId(Long professorId) {
+        this.professorId = professorId;
+    }
+
+    public Long getMateriaId() {
+        return this.materiaId;
+    }
+
+    public void setMateriaId(Long materiaId) {
+        this.materiaId = materiaId;
     }
 
     public LocalDateTime getHora() {
@@ -47,11 +61,12 @@ public class AulaForm {
         this.hora = hora;
     }
 
-    public Aula converter(UsuarioRepository usuarioRepo) {
-        Usuario usuarioAluno = usuarioRepo.findById(aluno).get();
-        Usuario usuarioProfessor = usuarioRepo.findById(professor).get();
+    public Aula converter(UsuarioRepository usuarioRepo, MateriaRepository materiaRepo) {
+        Usuario usuarioAluno = usuarioRepo.findById(alunoId).get();
+        Usuario usuarioProfessor = usuarioRepo.findById(professorId).get();
+        Materia materia = materiaRepo.findById(materiaId).get();
         String status = "Agendada";
-        return new Aula(usuarioAluno, usuarioProfessor, hora, status);
+        return new Aula(usuarioAluno, usuarioProfessor, materia, hora, status);
     }
 
 }

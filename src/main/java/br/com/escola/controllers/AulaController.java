@@ -16,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.escola.controllers.form.AulaForm;
 import br.com.escola.models.Aula;
+import br.com.escola.models.enums.EnumCategorias;
 import br.com.escola.services.AulaService;
 
 @RestController
@@ -27,14 +28,12 @@ public class AulaController {
 
     @GetMapping("/aluno/{id}")
     public List<Aula> listarAulasPorAluno(@PathVariable("id") Long id) {
-        String categoria = "Aluno";
-        return this.aulaService.listarAulas(id, categoria);
+        return this.aulaService.listarAulas(id, EnumCategorias.ALUNO);
     }
 
     @GetMapping("/professor/{id}")
     public List<Aula> listarAulasPorProfessor(@PathVariable("id") Long id) {
-        String categoria = "Professor";
-        return this.aulaService.listarAulas(id, categoria);
+        return this.aulaService.listarAulas(id, EnumCategorias.PROFESSOR);
     }
 
     @PostMapping()

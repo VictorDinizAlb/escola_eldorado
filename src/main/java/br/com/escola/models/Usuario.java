@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import br.com.escola.controllers.form.UsuarioForm;
 import br.com.escola.models.enums.EnumCategorias;
 import lombok.Data;
 
@@ -48,11 +49,11 @@ public class Usuario implements UserDetails {
     public Usuario() {
     }
 
-    public Usuario(String nome, String email, String senha, String categoria) {
-        this.nome = nome;
-        this.email = email;
-        this.senha = senha;
-        this.categoria = EnumCategorias.valueOf(categoria.toUpperCase());
+    public Usuario(UsuarioForm novoUsuario) {
+        this.nome = novoUsuario.getNome();
+        this.email = novoUsuario.getEmail();
+        this.senha = novoUsuario.getSenha();
+        this.categoria = novoUsuario.getCategoria();
     }
 
     public Long getId() {
