@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import br.com.escola.repository.MateriaRepository;
-import br.com.escola.model.Materia;
+import br.com.escola.models.Materia;
+import br.com.escola.repositories.MateriaRepository;
 
 @RestController
 @RequestMapping("/materia")

@@ -1,4 +1,4 @@
-package br.com.escola.model;
+package br.com.escola.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,7 +17,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import br.com.escola.model.enums.EnumCategorias;
+import br.com.escola.models.enums.EnumCategorias;
 import lombok.Data;
 
 @Data
@@ -42,6 +42,7 @@ public class Usuario implements UserDetails {
     private EnumCategorias categoria;
 
     @ManyToMany(fetch = FetchType.EAGER) // Configuração para carregar a lista quando carregar do banco o usuario
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private List<Perfil> perfis = new ArrayList<>();
 
     public Usuario() {
@@ -91,6 +92,7 @@ public class Usuario implements UserDetails {
     }
 
     @Override
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return null;
     }
@@ -108,16 +110,19 @@ public class Usuario implements UserDetails {
     }
 
     @Override
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public boolean isAccountNonExpired() {
         return true;
     }
 
     @Override
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public boolean isAccountNonLocked() {
         return true;
     }
 
     @Override
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public boolean isCredentialsNonExpired() {
         return true;
     }

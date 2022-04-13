@@ -1,7 +1,7 @@
 package br.com.escola.controllers.dto;
 
-import br.com.escola.model.Usuario;
-import br.com.escola.model.enums.EnumCategorias;
+import br.com.escola.models.Usuario;
+import br.com.escola.models.enums.EnumCategorias;
 
 public class UsuarioDto {
     private Long id;

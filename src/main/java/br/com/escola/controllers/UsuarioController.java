@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import br.com.escola.controllers.dto.UsuarioDto;
-import br.com.escola.model.Usuario;
-import br.com.escola.model.enums.EnumCategorias;
-import br.com.escola.repository.UsuarioRepository;
+import br.com.escola.models.Usuario;
+import br.com.escola.models.enums.EnumCategorias;
+import br.com.escola.repositories.UsuarioRepository;
 
 @RestController
 @RequestMapping("/usuario")

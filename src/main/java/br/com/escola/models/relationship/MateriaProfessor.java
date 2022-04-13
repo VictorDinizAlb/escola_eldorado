@@ -1,4 +1,4 @@
-package br.com.escola.model.relationship;
+package br.com.escola.models.relationship;
 
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -6,8 +6,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 
-import br.com.escola.model.Materia;
-import br.com.escola.model.Usuario;
+import br.com.escola.models.Materia;
+import br.com.escola.models.Usuario;
 
 @Entity
 public class MateriaProfessor {

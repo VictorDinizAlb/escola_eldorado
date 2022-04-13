@@ -5,9 +5,9 @@ import java.time.LocalDateTime;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-import br.com.escola.model.Aula;
-import br.com.escola.model.Usuario;
-import br.com.escola.repository.UsuarioRepository;
+import br.com.escola.models.Aula;
+import br.com.escola.models.Usuario;
+import br.com.escola.repositories.UsuarioRepository;
 
 public class AulaForm {
 

@@ -1,4 +1,4 @@
-package br.com.escola.model.enums;
+package br.com.escola.models.enums;
 
 public enum EnumStatusAula {
     AGENDADA,

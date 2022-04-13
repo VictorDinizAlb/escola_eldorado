@@ -1,4 +1,4 @@
-package br.com.escola.model;
+package br.com.escola.models;
 
 import java.time.LocalDateTime;
 
@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
-import br.com.escola.model.enums.EnumStatusAula;
+import br.com.escola.models.enums.EnumStatusAula;
 import lombok.Data;
 
 @Data
@@ -77,7 +77,7 @@ public class Aula {
         return this.status;
     }
 
-    public void setStatus(String status) {
-        this.status = EnumStatusAula.valueOf(status.toUpperCase());
+    public void setStatus(EnumStatusAula status) {
+        this.status = status;
     }
 }

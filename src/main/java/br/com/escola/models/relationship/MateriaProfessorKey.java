@@ -1,4 +1,4 @@
-package br.com.escola.model.relationship;
+package br.com.escola.models.relationship;
 
 import java.io.Serializable;
 

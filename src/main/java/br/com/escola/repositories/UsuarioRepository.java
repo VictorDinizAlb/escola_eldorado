@@ -1,12 +1,12 @@
-package br.com.escola.repository;
+package br.com.escola.repositories;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import br.com.escola.model.Usuario;
-import br.com.escola.model.enums.EnumCategorias;
+import br.com.escola.models.Usuario;
+import br.com.escola.models.enums.EnumCategorias;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 
