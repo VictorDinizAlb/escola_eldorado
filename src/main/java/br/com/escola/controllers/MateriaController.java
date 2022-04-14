@@ -31,7 +31,7 @@ public class MateriaController {
     }
 
     @GetMapping("/professor/{id}")
-    public List<Usuario> listarMateriasPorProfessor(@PathVariable("id") Long id) {
+    public List<Usuario> listarProfessoresPorMateria(@PathVariable("id") Long id) {
         return this.materiaService.listarProfessoresPorMateria(id);
     }
 
@@ -45,15 +45,13 @@ public class MateriaController {
     }
 
     @GetMapping("/adicionar")
-    public ResponseEntity<List<Materia>> vincularMateriaProfessor(@RequestParam Long materiaId, Long professorId,
-            @RequestBody UriComponentsBuilder uriBuilder) {
+    public List<Materia> vincularMateriaProfessor(@RequestParam Long materiaId, Long professorId) {
         List<Materia> materias = this.materiaService.vincularMateriaProfessor(materiaId, professorId);
 
         if (materias != null) {
-            URI uri = uriBuilder.path("/materia/adicionar").buildAndExpand(materias).toUri();
-            return ResponseEntity.created(uri).body(materias);
+            return materias;
         } else {
-            return ResponseEntity.badRequest().build();
+            return null;
         }
     }
 }

@@ -30,7 +30,7 @@ public class MateriaService {
 
     public List<Usuario> listarProfessoresPorMateria(Long id) {
         Optional<Materia> materia = this.materiaRepo.findById(id);
-        if (materia == null) {
+        if (materia.isEmpty()) {
             return null;
         }
         return materia.get().getProfessores();

@@ -27,7 +27,7 @@ public class AulaForm {
 
     @NotNull
     @NotEmpty
-    private LocalDateTime hora;
+    private LocalDateTime dataHora;
 
     public Long getAlunoId() {
         return this.alunoId;
@@ -53,12 +53,12 @@ public class AulaForm {
         this.materiaId = materiaId;
     }
 
-    public LocalDateTime getHora() {
-        return this.hora;
+    public LocalDateTime getDataHora() {
+        return this.dataHora;
     }
 
-    public void setHora(LocalDateTime hora) {
-        this.hora = hora;
+    public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
     }
 
     public Aula converter(UsuarioRepository usuarioRepo, MateriaRepository materiaRepo) {
@@ -66,7 +66,7 @@ public class AulaForm {
         Usuario usuarioProfessor = usuarioRepo.findById(professorId).get();
         Materia materia = materiaRepo.findById(materiaId).get();
         String status = "Agendada";
-        return new Aula(usuarioAluno, usuarioProfessor, materia, hora, status);
+        return new Aula(usuarioAluno, usuarioProfessor, materia, dataHora, status);
     }
 
 }

@@ -34,7 +34,7 @@ public class Aula {
     private Materia materia;
 
     @Column(nullable = false)
-    private LocalDateTime hora;
+    private LocalDateTime dataHora;
 
     @Column(nullable = false)
     private EnumStatusAula status;
@@ -42,11 +42,11 @@ public class Aula {
     public Aula() {
     }
 
-    public Aula(Usuario aluno, Usuario professor, Materia materia, LocalDateTime hora, String status) {
+    public Aula(Usuario aluno, Usuario professor, Materia materia, LocalDateTime dataHora, String status) {
         this.aluno = aluno;
         this.professor = professor;
         this.materia = materia;
-        this.hora = hora;
+        this.dataHora = dataHora;
         this.status = EnumStatusAula.valueOf(status.toUpperCase());
     }
 
@@ -70,12 +70,12 @@ public class Aula {
         this.professor = professor;
     }
 
-    public LocalDateTime getHora() {
-        return this.hora;
+    public LocalDateTime getDataHora() {
+        return this.dataHora;
     }
 
-    public void setHora(LocalDateTime hora) {
-        this.hora = hora;
+    public void setDataHora(LocalDateTime dataHora) {
+        this.dataHora = dataHora;
     }
 
     public EnumStatusAula getStatus() {
