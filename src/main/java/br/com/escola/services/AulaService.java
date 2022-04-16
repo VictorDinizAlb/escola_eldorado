@@ -18,8 +18,6 @@ import br.com.escola.repositories.UsuarioRepository;
 @Service
 public class AulaService {
 
-    private LocalDateTime dataHojeLDT = LocalDateTime.now();
-
     @Autowired
     AulaRepository aulaRepo;
 
@@ -31,7 +29,9 @@ public class AulaService {
 
     public Aula criarAula(AulaForm aulaForm) {
 
-        Integer jaPassou = aulaForm.getDataHora().compareTo(this.dataHojeLDT);
+        LocalDateTime dataHojeLDT = LocalDateTime.now();
+
+        Integer jaPassou = aulaForm.getDataHora().compareTo(dataHojeLDT);
 
         if (jaPassou > 0) {
             Aula novaAula = aulaForm.converter(this.usuarioRepo, this.materiaRepo);
@@ -64,12 +64,15 @@ public class AulaService {
 
     public List<Aula> atualizarStatusAulas(List<Aula> aulas) {
 
+        LocalDateTime dataHojeLDT = LocalDateTime.now();
+
         for (Aula aula : aulas) {
             if (aula.getDataHora().compareTo(dataHojeLDT) < 0 && aula.getStatus() != EnumStatusAula.CANCELADA) {
                 aula.setStatus(EnumStatusAula.REALIZADA);
                 this.aulaRepo.save(aula);
             }
         }
+
         return aulas;
     }
 
