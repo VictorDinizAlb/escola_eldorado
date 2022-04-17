@@ -36,6 +36,10 @@ public class MateriaService {
         return materia.get().getProfessores();
     }
 
+    public List<Materia> listarMateriasPorProfessor(Long id) {
+        return this.materiaRepo.findProfessoresId(id);
+    }
+
     public List<Materia> vincularMateriaProfessor(Long materiaId, Long professorId) {
         Materia materia = this.materiaRepo.findById(materiaId).get();
         Usuario professor = this.usuarioRepo.findById(professorId).get();

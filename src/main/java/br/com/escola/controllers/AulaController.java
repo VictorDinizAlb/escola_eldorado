@@ -22,7 +22,7 @@ import br.com.escola.services.AulaService;
 
 @RestController
 @RequestMapping("/aula")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("*")
 public class AulaController {
 
     @Autowired

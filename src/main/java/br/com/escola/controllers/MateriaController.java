@@ -21,7 +21,7 @@ import br.com.escola.services.MateriaService;
 
 @RestController
 @RequestMapping("/materia")
-@CrossOrigin("http://localhost:4200")
+@CrossOrigin("*")
 public class MateriaController {
 
     @Autowired
@@ -30,6 +30,11 @@ public class MateriaController {
     @GetMapping()
     public List<Materia> listarMaterias() {
         return this.materiaService.listarMaterias();
+    }
+
+    @GetMapping("/{id}")
+    public List<Materia> listarMateriasPorProfessor(@PathVariable("id") Long id) {
+        return this.materiaService.listarMateriasPorProfessor(id);
     }
 
     @GetMapping("/professor/{id}")
